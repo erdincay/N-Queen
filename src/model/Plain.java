@@ -1,32 +1,46 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import eval.Heuristics;
 
 /**
  * User: Ding
  * Date: 5/5/2014
  * Time: 3:21 PM
  */
-public class Plain {
-    private int plainSize;
-    private List<Queen> queens;
+public class Plain implements Node{
+    private State queens;
+    private Heuristics heuris;
 
-    public Plain(int size) {
-        this.plainSize = size;
-        queens = new ArrayList<Queen>(plainSize);
+    public Plain(int size, Heuristics heuris) {
+        this.queens = new Queens(size);
+        this.heuris = heuris;
     }
 
-    public int ConflictQueens() {
-        int count = 0;
-        for (int i = 0; i < queens.size(); i++) {
-            Queen curQ = queens.get(i);
-            for (int j = i + 1; j < queens.size(); j++) {
-                if (curQ.Conflict(queens.get(j))) {
-                    count++;
-                }
-            }
-        }
-        return count;
+    public Plain(State queens, Heuristics heuris) {
+        this.queens = queens;
+        this.heuris = heuris;
+    }
+
+    @Override
+    public int CostEval() {
+        return heuris.eval(queens);
+    }
+
+    @Override
+    public State getState() {
+        return queens;
+    }
+
+    @Override
+    public Heuristics getHeuristic() {
+        return heuris;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        int myCost = CostEval();
+        int othCost = ((Plain)o).CostEval();
+
+        return myCost - othCost;
     }
 }

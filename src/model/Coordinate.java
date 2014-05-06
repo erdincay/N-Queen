@@ -27,15 +27,26 @@ public class Coordinate {
         return y;
     }
 
-    public boolean sameLine(Coordinate oth) {
+    public boolean sameRow(Coordinate oth) {
         return y == oth.y;
     }
 
-    public boolean sameRow(Coordinate oth) {
+    public boolean sameCol(Coordinate oth) {
         return x == oth.x;
     }
 
-    public boolean sameOblique(Coordinate oth) {
+    public boolean sameDiagonal(Coordinate oth) {
         return Math.abs(x - oth.x) == Math.abs(y - oth.y);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Coordinate)) return false;
+
+        Coordinate that = (Coordinate) o;
+
+        return x == that.x && y == that.y;
+
     }
 }
