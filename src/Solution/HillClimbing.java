@@ -3,7 +3,6 @@ package Solution;
 import action.Action;
 import action.MoveOnCol;
 import eval.ConflictQueens;
-import eval.Heuristics;
 import model.*;
 
 import java.util.PriorityQueue;
@@ -15,16 +14,14 @@ import java.util.Queue;
  * Time: 3:31 PM
  */
 public class HillClimbing {
-    private Node root;
-    private Heuristics heuris;
+    private final Node root;
 
     public HillClimbing(int size) {
-        heuris = new ConflictQueens();
-        root = new Plain(size, heuris);
+        root = new Plain(size, new ConflictQueens());
     }
 
     private boolean ReachGoal(Node node) {
-        return heuris.eval(node.getState()) == 0;
+        return node.FitnessEval() == 0;
     }
 
     public Node Run() {
@@ -57,7 +54,7 @@ public class HillClimbing {
 
         Node newPlain = queensList.poll();
 
-        if (newPlain.CostEval() < cur.CostEval()) {
+        if (newPlain.FitnessEval() < cur.FitnessEval()) {
             return newPlain;
         }
 

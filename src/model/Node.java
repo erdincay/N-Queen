@@ -8,7 +8,7 @@ import eval.Heuristics;
  * Time: 11:00 PM
  */
 public interface Node extends Comparable {
-    public int CostEval();
+    public int FitnessEval();
 
     public State getState();
 

@@ -19,13 +19,17 @@ public class MoveOnCol implements Action{
 
     @Override
     public State act(State cur) {
+        if (cur ==  null ) {
+            return cur;
+        }
+
         Queens queens = (Queens) cur;
 
         if (QueenIndex < 0 || QueenIndex >= queens.size()){
             return cur;
         }
 
-        Queens newQs = new Queens(queens);
+        final Queens newQs = new Queens(queens);
         newQs.get(QueenIndex).MoveOnCol(step);
 
         return newQs;

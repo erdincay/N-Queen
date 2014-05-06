@@ -22,7 +22,7 @@ public class Plain implements Node{
     }
 
     @Override
-    public int CostEval() {
+    public int FitnessEval() {
         return heuris.eval(queens);
     }
 
@@ -38,8 +38,8 @@ public class Plain implements Node{
 
     @Override
     public int compareTo(Object o) {
-        int myCost = CostEval();
-        int othCost = ((Plain)o).CostEval();
+        int myCost = FitnessEval();
+        int othCost = ((Plain)o).FitnessEval();
 
         return myCost - othCost;
     }

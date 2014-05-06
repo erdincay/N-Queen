@@ -6,7 +6,7 @@ package model;
  * Time: 3:19 PM
  */
 public class Queen {
-    Coordinate coord;
+    private Coordinate coord;
 
     public Queen(Coordinate coord) {
         this.coord = coord;
@@ -18,6 +18,10 @@ public class Queen {
 
     public Coordinate getCoord() {
         return coord;
+    }
+
+    public void setCoord(Coordinate coord) {
+        this.coord = coord;
     }
 
     public boolean Conflict(Queen oth) {
