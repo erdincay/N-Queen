@@ -1,4 +1,4 @@
-package Solution;
+package solution;
 
 import action.Action;
 import action.CrossOver;

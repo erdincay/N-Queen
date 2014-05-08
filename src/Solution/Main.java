@@ -1,4 +1,4 @@
-package Solution;
+package solution;
 
 public class Main {
 
