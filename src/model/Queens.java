@@ -19,7 +19,6 @@ public class Queens extends ArrayList<Queen> implements State {
     }
 
     public Queens(Collection<? extends Queen> c) {
-        super(c);
         for (Queen q : c) {
             this.add(new Queen(q));
         }
