@@ -15,8 +15,11 @@ import java.util.Queue;
  */
 public class HillClimbing {
     private final Node root;
+    private int sidewaysCount;
+    private final int sidewaysThreshold = 10;
 
     public HillClimbing(int size) {
+        sidewaysCount = 0;
         root = new Plain(size, new ConflictQueens());
     }
 
@@ -25,15 +28,17 @@ public class HillClimbing {
     }
 
     public Node Run() {
-        Node cur = root;
-        while (cur != null) {
-            cur = Climb(cur);
-            if (ReachGoal(cur)) {
-                return cur;
+        Node cur = null;
+        Node next = root;
+        while (next != cur) {
+            cur = next;
+            next = Climb(cur);
+            if (ReachGoal(next)) {
+                return next;
             }
         }
 
-        return null;
+        return next;
     }
 
     private Node Climb(Node cur) {
@@ -54,10 +59,18 @@ public class HillClimbing {
 
         Node newPlain = queensList.poll();
 
-        if (newPlain.FitnessEval() < cur.FitnessEval()) {
+        int newFit = newPlain.FitnessEval();
+        int curFit = cur.FitnessEval();
+        if (newFit < curFit) {
+            sidewaysCount = 0;
+            return newPlain;
+        }
+        else if (newFit == curFit && sidewaysCount < sidewaysThreshold) {
+            sidewaysCount++;
             return newPlain;
         }
 
-        return null;
+        sidewaysCount = 0;
+        return cur;
     }
 }
