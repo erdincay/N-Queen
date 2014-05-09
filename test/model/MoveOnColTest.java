@@ -1,9 +1,7 @@
-package utest;
+package model;
 
 import action.Action;
 import action.MoveOnCol;
-import model.Coordinate;
-import model.Queens;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,12 +37,6 @@ public class MoveOnColTest {
     @Before
     public void setUp() throws Exception {
         queens = new Queens(size);
-//        for (int i = 0; i < size; i++) {
-//            queens.add(new Queen(new Coordinate(i,i)));
-//        }
-
-        //writeMsg(queens.toString());
-        //showMsg(queens.toString());
     }
 
     @After
@@ -62,9 +54,6 @@ public class MoveOnColTest {
                 int step = j - coord.getY();
                 Action movement = new MoveOnCol(i, step);
                 Queens newQueens = (Queens) movement.act(queens);
-
-//                showMsg(queens.toString());
-//                showMsg(newQueens.toString());
 
                 queensList.add(newQueens);
             }

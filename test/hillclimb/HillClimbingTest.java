@@ -1,4 +1,4 @@
-package utest;
+package hillclimb;
 
 import model.Node;
 import org.junit.After;
@@ -12,7 +12,7 @@ import solution.HillClimbing;
  * Time: 5:01 PM
  */
 public class HillClimbingTest {
-    private final int size = 8;
+    private final int size = 15;
     @Before
     public void setUp() throws Exception {
 

@@ -10,10 +10,12 @@ import model.*;
 import java.util.*;
 
 /**
- * Created by WHPM-1031 on 5/6/2014.
+ * User: WHPM-1031
+ * Date: 5/6/2014
+ * Time: 1:34 AM
  */
 public class Genetic {
-    private final int populationSize = 4;
+    private final int populationSize = 3000;
     private final int maxGeneration = 100;
     private int parentSize;
 

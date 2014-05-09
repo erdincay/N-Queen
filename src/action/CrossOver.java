@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created by WHPM-1031 on 5/6/2014.
+ * User: WHPM-1031
+ * Date: 5/6/2014
+ * Time: 1:34 AM
  */
 public class CrossOver implements DualAction {
     @Override
@@ -22,8 +24,8 @@ public class CrossOver implements DualAction {
         Random generator = new Random();
         int crossIndex = generator.nextInt(size - 1);
 
-        Queens childX = new Queens(0);
-        Queens childY = new Queens(0);
+        final Queens childX = new Queens(0);
+        final Queens childY = new Queens(0);
         for (int i = 0; i < size; i++) {
             if (i <= crossIndex) {
                 childX.add(new Queen(parentX.get(i)));
@@ -34,8 +36,6 @@ public class CrossOver implements DualAction {
             }
         }
 
-        List<State> ret = new ArrayList<State>(2);
-
-        return ret;
+        return new ArrayList<State>(2){{add(childX); add(childY);}};
     }
 }
