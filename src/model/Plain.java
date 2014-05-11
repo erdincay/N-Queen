@@ -7,7 +7,7 @@ import eval.Heuristics;
  * Date: 5/5/2014
  * Time: 3:21 PM
  */
-public class Plain implements Node{
+public class Plain implements Node {
     private State queens;
     private Heuristics heuris;
 
@@ -21,9 +21,22 @@ public class Plain implements Node{
         this.heuris = heuris;
     }
 
+    private int GoalState() {
+        if (heuris.PreferSmall()) {
+            return 0;
+        }
+
+        int size = ((Queens) queens).size() - 1;
+        return (1 + size) * size / 2;
+    }
+
     @Override
     public int FitnessEval() {
         return heuris.eval(queens);
+    }
+
+    public boolean ReachGoal() {
+        return FitnessEval() == GoalState();
     }
 
     @Override
@@ -39,9 +52,13 @@ public class Plain implements Node{
     @Override
     public int compareTo(Object o) {
         int myCost = FitnessEval();
-        int othCost = ((Plain)o).FitnessEval();
+        int othCost = ((Plain) o).FitnessEval();
 
-        return myCost - othCost;
+        if (heuris.PreferSmall()) {
+            return myCost - othCost;
+        }
+
+        return othCost - myCost;
     }
 
     @Override
@@ -51,10 +68,8 @@ public class Plain implements Node{
 
         Plain plain = (Plain) o;
 
-        if (heuris != null ? !heuris.equals(plain.heuris) : plain.heuris != null) return false;
-        if (queens != null ? !queens.equals(plain.queens) : plain.queens != null) return false;
+        return !(heuris != null ? !heuris.equals(plain.heuris) : plain.heuris != null) && !(queens != null ? !queens.equals(plain.queens) : plain.queens != null);
 
-        return true;
     }
 
     @Override
@@ -72,11 +87,10 @@ public class Plain implements Node{
 
         StringBuilder ret = new StringBuilder();
         for (int i = 0; i < lines.length; i++) {
-            if (mid == i){
-                ret.append(lines[i] + " fitness = " + FitnessEval() + System.lineSeparator());
-            }
-            else {
-                ret.append(lines[i] + System.lineSeparator());
+            if (mid == i) {
+                ret.append(lines[i]).append(" fitness = ").append(FitnessEval()).append(System.lineSeparator());
+            } else {
+                ret.append(lines[i]).append(System.lineSeparator());
             }
         }
 

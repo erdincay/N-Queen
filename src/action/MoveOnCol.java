@@ -20,7 +20,7 @@ public class MoveOnCol implements Action{
     @Override
     public State act(State cur) {
         if (cur ==  null ) {
-            return cur;
+            return null;
         }
 
         Queens queens = (Queens) cur;

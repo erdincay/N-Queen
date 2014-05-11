@@ -2,7 +2,7 @@ package solution;
 
 import action.Action;
 import action.MoveOnCol;
-import eval.ConflictQueens;
+import eval.ConflictedQueens;
 import model.*;
 
 import java.util.PriorityQueue;
@@ -16,15 +16,11 @@ import java.util.Queue;
 public class HillClimbing {
     private final Node root;
     private int sidewaysCount;
-    private final int sidewaysThreshold = 15;
+    private final int sidewaysThreshold = 30;
 
     public HillClimbing(int size) {
         sidewaysCount = 0;
-        root = new Plain(size, new ConflictQueens());
-    }
-
-    private boolean ReachGoal(Node node) {
-        return node.FitnessEval() == 0;
+        root = new Plain(size, new ConflictedQueens());
     }
 
     public Node Run() {
@@ -33,7 +29,7 @@ public class HillClimbing {
         while (next != cur) {
             cur = next;
             next = Climb(cur);
-            if (ReachGoal(next)) {
+            if (next.ReachGoal()) {
                 return next;
             }
         }
@@ -59,13 +55,12 @@ public class HillClimbing {
 
         Node newPlain = queensList.poll();
 
-        int newFit = newPlain.FitnessEval();
-        int curFit = cur.FitnessEval();
-        if (newFit < curFit) {
+        int compareRet = newPlain.compareTo(cur);
+        if (compareRet < 0) {
             sidewaysCount = 0;
             return newPlain;
         }
-        else if (newFit == curFit && sidewaysCount < sidewaysThreshold) {
+        else if (compareRet == 0 && sidewaysCount < sidewaysThreshold) {
             sidewaysCount++;
             return newPlain;
         }

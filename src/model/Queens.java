@@ -24,12 +24,12 @@ public class Queens extends ArrayList<Queen> implements State {
         }
     }
 
-    public int CountConflict() {
+    public int CountConflict(boolean bConflicted) {
         int count = 0;
         for (int i = 0; i < this.size(); i++) {
             Queen curQ = this.get(i);
             for (int j = i + 1; j < this.size(); j++) {
-                if (curQ.Conflict(this.get(j))) {
+                if (!(curQ.Conflict(this.get(j)) ^ bConflicted)) {
                     count++;
                 }
             }

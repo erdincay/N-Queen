@@ -30,14 +30,15 @@ public class GeneticTest {
     @Test
     public void testStatistic() {
         int count = 0;
-        for (int i = 0; i < 100; i++) {
+        int trails = 0;
+        for (int i = 0; i < trails; i++) {
             Genetic gc = new Genetic(size);
             Node sln = gc.Run();
-            if (sln.FitnessEval() == 0) {
+            if (sln.ReachGoal()) {
                 count++;
             }
         }
 
-        System.out.print((double)count/100.0f);
+        System.out.print((double) count / trails);
     }
 }

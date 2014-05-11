@@ -8,13 +8,16 @@ import model.State;
 import java.util.Random;
 
 /**
- * Created by WHPM-1031 on 5/6/2014.
+ * User: WHPM-1031
+ * Date: 5/6/2014
+ * Time: 2:12 AM
  */
 public class Mutate implements Action {
-    private final double mutatePercentage = 0.15;
+    private double mutatePercentage = 0.1;
     private Random generator;
 
-    public Mutate() {
+    public Mutate(double percentage) {
+        this.mutatePercentage = percentage;
         this.generator = new Random();
     }
 

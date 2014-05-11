@@ -5,7 +5,9 @@ import model.State;
 import java.util.List;
 
 /**
- * Created by WHPM-1031 on 5/6/2014.
+ * User: WHPM-1031
+ * Date: 5/6/2014
+ * Time: 2:13 AM
  */
 public interface DualAction {
     public List<State> act(State x, State y);

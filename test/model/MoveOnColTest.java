@@ -14,7 +14,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class MoveOnColTest {
-    private int size = 15;
     private Queens queens;
     private static FileWriter wt;
     static {
@@ -36,6 +35,7 @@ public class MoveOnColTest {
 
     @Before
     public void setUp() throws Exception {
+        int size = 15;
         queens = new Queens(size);
     }
 
@@ -46,10 +46,10 @@ public class MoveOnColTest {
 
     @Test
     public void testAct() throws Exception {
-        List<List<Queens>> queensMatrix = new ArrayList<List<Queens>>(queens.size());
+        List<List<Queens>> queensMatrix = new ArrayList<>(queens.size());
         for (int i = 0; i < queens.size(); i++) {
             Coordinate coord = queens.get(i).getCoord();
-            List<Queens> queensList = new ArrayList<Queens>(queens.size());
+            List<Queens> queensList = new ArrayList<>(queens.size());
             for (int j = 0; j < queens.size(); j++) {
                 int step = j - coord.getY();
                 Action movement = new MoveOnCol(i, step);

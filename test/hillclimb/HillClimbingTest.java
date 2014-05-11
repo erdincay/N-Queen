@@ -13,6 +13,7 @@ import solution.HillClimbing;
  */
 public class HillClimbingTest {
     private final int size = 15;
+
     @Before
     public void setUp() throws Exception {
 
@@ -29,5 +30,20 @@ public class HillClimbingTest {
         Node sln = hc.Run();
 
         System.out.println(sln);
+    }
+
+    @Test
+    public void testStatistic() {
+        int count = 0;
+        int trails = 1000;
+        for (int i = 0; i < trails; i++) {
+            HillClimbing hc = new HillClimbing(size);
+            Node sln = hc.Run();
+            if (sln.ReachGoal()) {
+                count++;
+            }
+        }
+
+        System.out.print((double) count / trails);
     }
 }

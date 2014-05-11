@@ -9,8 +9,10 @@ import eval.Heuristics;
  */
 public interface Node extends Comparable {
     public int FitnessEval();
-
     public State getState();
-
+    public boolean ReachGoal();
     public Heuristics getHeuristic();
+
+    @Override
+    public int compareTo(Object o);
 }
