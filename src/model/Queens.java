@@ -52,9 +52,9 @@ public class Queens extends ArrayList<Queen> implements State {
         StringBuilder ret = new StringBuilder(this.size() * this.size() * 3);
         for (int i = 0; i < this.size(); i++) {
             for (int j = 0; j < this.size(); j++) {
-                String place = "* ";
+                String place = "*  ";
                 if (Contain(new Coordinate(j, this.size() - 1 - i))) {
-                    place = "Q ";
+                    place = "Q  ";
                 }
                 ret.append(place);
             }
