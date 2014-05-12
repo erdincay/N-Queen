@@ -24,7 +24,7 @@ public class ReportTest {
     @Before
     public void setUp() throws Exception {
         size = 15;
-        trails = 2000;
+        trails = 5000;
     }
 
     @Test

@@ -93,7 +93,7 @@ public class Report {
     public void RunReport(final String filename) {
         File file = new File(filename);
         try {
-            FileWriter writer = new FileWriter(file);
+            FileWriter writer = new FileWriter(file,true);
 
             for (String tag : datas.keySet()) {
                 writer.write(tag + " ");
