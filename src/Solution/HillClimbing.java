@@ -13,16 +13,23 @@ import java.util.Queue;
  * Date: 5/5/2014
  * Time: 3:31 PM
  */
-public class HillClimbing {
+public class HillClimbing implements Solution {
     private final Node root;
     private int sidewaysCount;
     private final int sidewaysThreshold = 30;
+    private int count_climbing = 0;
+
+    @Override
+    public int getTrails() {
+        return count_climbing;
+    }
 
     public HillClimbing(int size) {
         sidewaysCount = 0;
         root = new Plain(size, new ConflictedQueens());
     }
 
+    @Override
     public Node Run() {
         Node cur = null;
         Node next = root;
@@ -39,7 +46,7 @@ public class HillClimbing {
 
     private Node Climb(Node cur) {
         Queens queens = (Queens) cur.getState();
-        Queue<Node> queensList = new PriorityQueue<Node>();
+        Queue<Node> queensList = new PriorityQueue<>();
 
         for (int i = 0; i < queens.size(); i++) {
             Coordinate coord = queens.get(i).getCoord();
@@ -58,14 +65,22 @@ public class HillClimbing {
         int compareRet = newPlain.compareTo(cur);
         if (compareRet < 0) {
             sidewaysCount = 0;
+            count_climbing++;
             return newPlain;
         }
         else if (compareRet == 0 && sidewaysCount < sidewaysThreshold) {
             sidewaysCount++;
+            count_climbing++;
             return newPlain;
         }
 
         sidewaysCount = 0;
+        count_climbing++;
         return cur;
+    }
+
+    @Override
+    public String toString() {
+        return HillClimbing.class.getName();
     }
 }

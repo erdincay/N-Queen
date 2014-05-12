@@ -2,6 +2,8 @@ package model;
 
 import action.Action;
 import action.MoveOnCol;
+import model.Coordinate;
+import model.Queens;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

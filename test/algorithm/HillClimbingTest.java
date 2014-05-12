@@ -1,4 +1,4 @@
-package hillclimb;
+package algorithm;
 
 import model.Node;
 import org.junit.After;

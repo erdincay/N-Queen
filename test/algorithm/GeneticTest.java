@@ -1,4 +1,4 @@
-package genetic;
+package algorithm;
 
 import model.Node;
 import org.junit.After;

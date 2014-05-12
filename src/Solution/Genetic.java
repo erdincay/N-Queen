@@ -9,7 +9,12 @@ import model.Node;
 import model.Plain;
 import model.State;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -17,32 +22,53 @@ import java.util.stream.Collectors;
  * Date: 5/6/2014
  * Time: 1:34 AM
  */
-public class Genetic {
-    private int populationSize = 1000;
-    private final int maxNonImproved = 200;
+public class Genetic implements Solution {
+    private static final Logger LOG = Logger.getLogger(Genetic.class.getName());
+
+    private int populationSize;
+    private final int maxNonImproved = 500;
     private final int maxCatastrophe = 50;
-    private final double mutate_percentage = 0.2;
-    private final double catastrophe_percentage = 0.3;
-    private final double elite_percentage = 0.3;
-    private int parentSize;
+    private int count_unimproved = 0;
+    private int count_catastrophe = 0;
+    private int count_generation = 0;
 
     private final List<Node> initGeneration;
 
+    @Override
+    public int getTrails() {
+        return count_generation;
+    }
+
+    public double getMutate_percentage() {
+        double base = 0.1;
+        return base + ((double) count_unimproved / (maxNonImproved * 2)) + ((double) count_unimproved / (maxNonImproved * 2)) * ((double) count_catastrophe / (maxCatastrophe));
+    }
+
+    public double getCatastrophe_percentage() {
+        double base = 0.5;
+        return ((double) count_catastrophe / maxCatastrophe) * base;
+    }
+
+    public double getElite_percentage() {
+        return 0.1;
+    }
+
     public Genetic(int size) {
+        populationSize = size;
         if (populationSize % 2 != 0) {
             populationSize++;
         }
-        parentSize = populationSize;
 
         initGeneration = new ArrayList<>(populationSize);
         for (int i = 0; i < populationSize; i++) {
             initGeneration.add(new Plain(size, new NonConflictedQueens()));
         }
+        Collections.sort(initGeneration);
     }
 
     public static double choose(int x, int y) {
         if (y < 0 || y > x) return 0;
-        if (y > x/2) {
+        if (y > x / 2) {
             y = x - y;
         }
 
@@ -54,14 +80,14 @@ public class Genetic {
         return answer;
     }
 
-    public int calcCombinationSize(){
-        for (int i = 2; i <= populationSize; i++) {
-            if (choose(i,2) * 2 >= populationSize) {
+    public int calcCombinationSize(int size) {
+        for (int i = 2; i <= size; i++) {
+            if (choose(i, 2) * 2 >= size) {
                 return i;
             }
         }
 
-        return populationSize;
+        return size;
     }
 
     private Node RoundRobinSelection(List<Node> nodes, List<Double> probability) {
@@ -92,6 +118,13 @@ public class Genetic {
         return ((node1.compareTo(node2) < 0) ? node1 : node2);
     }
 
+    protected Node DoubleBinarySelection(List<Node> nodes){
+        Node node1 = BinarySelection(nodes);
+        Node node2 = BinarySelection(nodes);
+
+        return ((node1.compareTo(node2) < 0) ? node1 : node2);
+    }
+
     private List<Double> CalcProbability(List<Node> nodes) {
         List<Double> probability = new ArrayList<>(nodes.size());
         int sum = nodes.stream().mapToInt(Node::FitnessEval).sum();
@@ -100,37 +133,17 @@ public class Genetic {
     }
 
     private List<Node> Next(List<Node> curGeneration) {
-        List<Double> probability = CalcProbability(curGeneration);
-        Queue<Node> parents = new PriorityQueue<>(parentSize);
-        while (parents.size() < parentSize) {
-//            Node parent = RoundRobinSelection(curGeneration, probability);
-            Node parent = BinarySelection(curGeneration);
-            if (parent != null) {
-                parents.add(parent);
-            }
-        }
-
-        Queue<Node> children = new PriorityQueue<>();
-        int elite_size = (int) (elite_percentage * parents.size());
-        List<Node> elite = new ArrayList<>(elite_size);
+        List<Node> children = new ArrayList<>(populationSize);
         while (children.size() < populationSize) {
-            Node parentX = parents.poll();
-            Node parentY = parents.poll();
+            Node parentX = BinarySelection(curGeneration);
+            Node parentY = BinarySelection(curGeneration);
             children.addAll(Mutate(ReProduce(parentX, parentY)));
-            if (elite.size() < elite_size) {
-                elite.add(parentX);
-                elite.add(parentY);
-            }
         }
-        children.addAll(elite);
+        children.addAll(curGeneration.subList(0, (int) (getElite_percentage() * curGeneration.size())));
+        Collections.sort(children);
 
-
-        List<Node> ret = new ArrayList<>(populationSize);
-        for (int i = 0; i < populationSize && children.size() > 0; i++) {
-            ret.add(children.poll());
-        }
-
-        return ret;
+        count_generation++;
+        return children.subList(0, populationSize);
     }
 
     private List<Node> Catastrophe(List<Node> nodes, double factor) {
@@ -139,30 +152,32 @@ public class Genetic {
         return nodes.subList(index, nodes.size());
     }
 
-    public Node Run(){
+    @Override
+    public Node Run() {
         List<Node> curGeneration = initGeneration;
-        int countUnimproved = 0;
-        int count_catastrophe = 0;
         while (count_catastrophe < maxCatastrophe) {
-            if (countUnimproved < maxNonImproved){
+            if (count_unimproved < maxNonImproved) {
                 Node bestLast = curGeneration.get(0);
                 if (bestLast.ReachGoal()) {
                     return bestLast;
                 }
 
                 curGeneration = Next(curGeneration);
+
+                if (curGeneration.size() != populationSize) {
+                    LOG.log(Level.WARNING, "Population Size is " + curGeneration.size());
+                }
                 Node bestCur = curGeneration.get(0);
-                if (bestCur.compareTo(bestLast) < 0){
-                    countUnimproved = 0;
+                if (bestCur.compareTo(bestLast) < 0) {
+                    count_unimproved = 0;
+                } else {
+                    count_unimproved++;
                 }
-                else {
-                    countUnimproved++;
-                }
-            }
-            else {
-                curGeneration = Catastrophe(curGeneration, catastrophe_percentage);
-                countUnimproved = 0;
+            } else {
+                curGeneration = Catastrophe(curGeneration, getCatastrophe_percentage());
+                count_unimproved = 0;
                 count_catastrophe++;
+//                LOG.log(Level.SEVERE, "Catastrophe count = " + count_catastrophe);
             }
         }
 
@@ -179,13 +194,14 @@ public class Genetic {
     }
 
     private List<Node> Mutate(List<Node> children) {
-        Action action = new Mutate(mutate_percentage);
+        Action action = new Mutate(getMutate_percentage());
         List<Node> ret = new ArrayList<>(children.size());
         ret.addAll(children.stream().map(node -> new Plain(action.act(node.getState()), node.getHeuristic())).collect(Collectors.toList()));
         return ret;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return Genetic.class.getName();
+    }
 }

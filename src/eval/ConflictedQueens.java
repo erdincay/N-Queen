@@ -18,4 +18,9 @@ public class ConflictedQueens implements Heuristics{
     public boolean PreferSmall() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return ConflictedQueens.class.getName() + " : ";
+    }
 }

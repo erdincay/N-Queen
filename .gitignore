@@ -216,3 +216,5 @@ pip-log.txt
 .idea/workspace.xml
 out/
 .idea/
+*.class
+*.txt

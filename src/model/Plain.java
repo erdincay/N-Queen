@@ -88,7 +88,7 @@ public class Plain implements Node {
         StringBuilder ret = new StringBuilder();
         for (int i = 0; i < lines.length; i++) {
             if (mid == i) {
-                ret.append(lines[i]).append(" fitness = ").append(FitnessEval()).append(System.lineSeparator());
+                ret.append(lines[i]).append(getHeuristic().toString()).append(FitnessEval()).append(System.lineSeparator());
             } else {
                 ret.append(lines[i]).append(System.lineSeparator());
             }
