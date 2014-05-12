@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import solution.Genetic;
 
+import java.text.DecimalFormat;
+
 public class GeneticTest {
     private final int size = 15;
 
@@ -30,7 +32,7 @@ public class GeneticTest {
     @Test
     public void testStatistic() {
         int count = 0;
-        int trails = 0;
+        int trails = 10000;
         for (int i = 0; i < trails; i++) {
             Genetic gc = new Genetic(size);
             Node sln = gc.Run();
@@ -39,6 +41,6 @@ public class GeneticTest {
             }
         }
 
-        System.out.print((double) count / trails);
+        System.out.println(new DecimalFormat("#0.0000").format((double) count / (double)trails));
     }
 }

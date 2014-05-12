@@ -13,7 +13,7 @@ import java.util.Random;
  * Time: 2:12 AM
  */
 public class Mutate implements Action {
-    private double mutatePercentage = 0.1;
+    private double mutatePercentage;
     private Random generator;
 
     public Mutate(double percentage) {
