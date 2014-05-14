@@ -16,7 +16,7 @@ import java.util.Queue;
 public class HillClimbing implements Solution {
     private final Node root;
     private int sidewaysCount;
-    private final int sidewaysThreshold = 30;
+    private final int sidewaysThreshold = 10;
     private int count_climbing = 0;
 
     @Override

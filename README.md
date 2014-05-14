@@ -27,10 +27,13 @@ output :        String type, show the result in the output file, the value is th
 size :          Integer type, set the number of the queens.
                 It's optional, default value is 15.
 
+population:     Integer type, set the population size for each genetic generation.
+				It's optional, default value is the size. It only work for genetic algorithm.
+
 You can ignore all the optional parameters or some of them. The order of parameter does not matter.
 eg, "Main.class"
     "Main.class alg=genetic"
     "Main.class alg=genetic output=step.log"
     "Main.class output=step.log alg=hillclimbing"
-    "Main.class size=8"
+    "Main.class size=8 population=100"
 are all valid format of running parameters.

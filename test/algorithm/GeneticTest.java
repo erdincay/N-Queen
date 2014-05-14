@@ -23,7 +23,7 @@ public class GeneticTest {
 
     @Test
     public void testRun() throws Exception {
-        Genetic gc = new Genetic(size);
+        Genetic gc = new Genetic(size, size);
         Node sln = gc.Run();
 
         System.out.println(sln);
@@ -32,9 +32,9 @@ public class GeneticTest {
     @Test
     public void testStatistic() {
         int count = 0;
-        int trails = 10000;
+        int trails = 1000;
         for (int i = 0; i < trails; i++) {
-            Genetic gc = new Genetic(size);
+            Genetic gc = new Genetic(size, size);
             Node sln = gc.Run();
             if (sln.ReachGoal()) {
                 count++;

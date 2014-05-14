@@ -53,15 +53,15 @@ public class Genetic implements Solution {
         return 0.1;
     }
 
-    public Genetic(int size) {
-        populationSize = size;
+    public Genetic(int queenSize, int population) {
+        populationSize = population;
         if (populationSize % 2 != 0) {
             populationSize++;
         }
 
         initGeneration = new ArrayList<>(populationSize);
         for (int i = 0; i < populationSize; i++) {
-            initGeneration.add(new Plain(size, new NonConflictedQueens()));
+            initGeneration.add(new Plain(queenSize, new NonConflictedQueens()));
         }
         Collections.sort(initGeneration);
     }

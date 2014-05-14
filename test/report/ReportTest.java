@@ -43,7 +43,7 @@ public class ReportTest {
     @Test
     public void testGenetic() throws Exception {
         for (int i = 0; i < trails; i++) {
-            Genetic gc = new Genetic(size);
+            Genetic gc = new Genetic(size, size);
 
             report.StartRecord();
             Node ret = gc.Run();
