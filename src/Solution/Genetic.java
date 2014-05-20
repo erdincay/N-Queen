@@ -35,7 +35,7 @@ public class Genetic implements Solution {
     private final List<Node> initGeneration;
 
     @Override
-    public int getTrails() {
+    public int getTrials() {
         return count_generation;
     }
 

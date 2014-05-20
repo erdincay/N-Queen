@@ -66,7 +66,7 @@ public class Report {
 
     private void RecordReport(final long time, Solution sln, Node ret) {
         if (ret != null) {
-            AddData(sln.toString(), time, sln.getTrails(), ret.ReachGoal());
+            AddData(sln.toString(), time, sln.getTrials(), ret.ReachGoal());
         }
     }
 

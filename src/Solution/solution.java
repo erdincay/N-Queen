@@ -9,5 +9,5 @@ import model.Node;
  */
 public interface Solution {
     public Node Run();
-    public int getTrails();
+    public int getTrials();
 }

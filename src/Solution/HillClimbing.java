@@ -20,7 +20,7 @@ public class HillClimbing implements Solution {
     private int count_climbing = 0;
 
     @Override
-    public int getTrails() {
+    public int getTrials() {
         return count_climbing;
     }
 
