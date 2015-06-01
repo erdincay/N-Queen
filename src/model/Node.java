@@ -8,11 +8,11 @@ import eval.Heuristics;
  * Time: 11:00 PM
  */
 public interface Node extends Comparable {
-    public int FitnessEval();
-    public State getState();
-    public boolean ReachGoal();
-    public Heuristics getHeuristic();
+    int FitnessEval();
+    State getState();
+    boolean ReachGoal();
+    Heuristics getHeuristic();
 
     @Override
-    public int compareTo(Object o);
+    int compareTo(Object o);
 }

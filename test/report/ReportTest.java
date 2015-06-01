@@ -4,9 +4,9 @@ import model.Node;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-import solution.Genetic;
-import solution.HillClimbing;
-import solution.Report;
+import Solution.Genetic;
+import Solution.HillClimbing;
+import Solution.Report;
 
 import static org.junit.Assert.assertNotNull;
 

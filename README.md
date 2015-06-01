@@ -12,7 +12,7 @@ Only the [test] package has a dependency on JUnit 4.12, but it is separate from 
 
 Run
 ---
-solution.Main class has the main function.
+Solution.Main class has the main function.
 
 Run the program as: "Main.class alg=value output=value size=value".
 

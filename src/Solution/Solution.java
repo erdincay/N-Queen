@@ -1,4 +1,4 @@
-package solution;
+package Solution;
 
 import model.Node;
 
@@ -8,6 +8,6 @@ import model.Node;
  * Time: 10:06 PM
  */
 public interface Solution {
-    public Node Run();
-    public int getTrials();
+    Node Run();
+    int getTrials();
 }

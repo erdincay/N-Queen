@@ -1,4 +1,4 @@
-package solution;
+package Solution;
 
 import model.Node;
 

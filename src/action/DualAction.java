@@ -10,5 +10,5 @@ import java.util.List;
  * Time: 2:13 AM
  */
 public interface DualAction {
-    public List<State> act(State x, State y);
+    List<State> act(State x, State y);
 }
